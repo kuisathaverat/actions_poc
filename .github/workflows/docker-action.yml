@@ -1,0 +1,36 @@
+# This workflow run a step inside a Docker container.
+name: Docker action
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Run a command in a Docker container      
+      - name: On Python Container
+        uses: docker://python:3.9
+        run: python --version
+
+  # Run a command in a Docker container   
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+    steps:
+      - run: python --version
+
+  services-test-job:
+    runs-on: ubuntu-latest
+    services:
+      nginx:
+        image: nginx
+        # Map port 8080 on the Docker host to port 80 on the nginx container
+        ports:
+          - 8080:80
+    steps:
+      - run: curl -Iv 127.0.0.1:8080
