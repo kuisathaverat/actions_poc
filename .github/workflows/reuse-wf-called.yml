@@ -30,5 +30,7 @@ jobs:
       - run: |
           echo "username: ${{ inputs.username }}"
           echo "token: ${{ secrets.envGhToken }}"
-      - run: echo "::set-output name=firstword::hello"
-      - run: echo "::set-output name=secondword::world"
+      - id: step1
+        run: echo "::set-output name=firstword::hello"
+      - id: step2
+        run: echo "::set-output name=secondword::world"
