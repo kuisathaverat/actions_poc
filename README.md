@@ -15,3 +15,11 @@ see [Automatic token authentication](https://docs.github.com/en/actions/security
 # Other links
 
 * [Usage limits](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits)
+* [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
+* [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+
+## Actions
+
+* [github-script](https://github.com/actions/github-script) Write workflows scripting the GitHub API in JavaScript
+* [file-changes-action](https://github.com/trilom/file-changes-action) get outputs of all of the files that have changed in your repository
+* [cache](https://github.com/actions/cache) Cache dependencies and build outputs in GitHub Actions
