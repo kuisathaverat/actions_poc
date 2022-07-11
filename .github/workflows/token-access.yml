@@ -1,5 +1,5 @@
 # This workflow chek the token access
-name: Leak secret
+name: Token access permission
 
 on:
   workflow_dispatch:
