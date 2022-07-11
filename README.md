@@ -11,6 +11,14 @@ can trigger a workflow.
 * [inputs sample](.github/workflows/wf-inputs.yml)
 * [Choosing GitHub-hosted runners](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners)
 * [shell](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
+* [Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+* [Workflow Commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)
+* [Caching dependencies to speed up workflows](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
+* [Artifacts](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts)
+* [Approving workflow runs from public forks](https://docs.github.com/en/actions/managing-workflow-runs/approving-workflow-runs-from-public-forks)
+* [Usage limits](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits)
+* [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
+* [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
 
 ## Containers
 
@@ -42,6 +50,7 @@ to avoid surprises. By dafault it has only content read permission.
 * [Automatic token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
 * [Token access example](.github/workflows/token-access.yml)
 * [Permissions](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idpermissions)
+* [Mask strings](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-masking-a-string)
 
 ## Secret leaks
 
@@ -51,6 +60,12 @@ however like in other CIs it is easy to by pass this protection midifiying the o
 to leak the password. 
 
 * [Leak Secret](.github/workflows/leak-secret.yml)
+
+## OpenID
+
+* [About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+* [Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
+* [Configuring OpenID Connect in HashiCorp Vault](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-hashicorp-vault)
 
 # Matrix execution support
 
@@ -75,9 +90,9 @@ but it is flexible enough to cover most of the cases.
 
 # Other links
 
-* [Usage limits](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits)
-* [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
-* [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+* [Skipping workflow runs](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs)
+* [Deploying to Google Kubernetes Engine](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-google-kubernetes-engine)
+
 
 ## Actions
 
