@@ -1,0 +1,23 @@
+# This workflow show how to use inputs for the workflow
+name: inputs sample
+
+on:
+  workflow_dispatch:
+    inputs:
+      param_string:
+        description: String parameter
+        required: true
+        type: string
+      param_boolean:
+        description: Boolean parameter
+        required: true
+        type: boolean
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy build to target
+        run: |
+          echo "String: ${{ inputs.param_string }}"
+          echo "Boolean: ${{ inputs.param_boolean }}"
+          
