@@ -18,7 +18,7 @@ jobs:
           ]
     steps:
       - uses: actions/checkout@v3
-      - name: Run matrix item ${{ matrix.items }}"
+      - name: Run matrix item ${{ matrix.items }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
