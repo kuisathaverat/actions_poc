@@ -1,0 +1,19 @@
+# This workflow chek the token access
+name: Leak secret
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Try to leak a secret
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }}
+          python -c "print(' '.join('${{ secrets.GITHUB_TOKEN }}'))"
+          gh repo list
+          gh repo create foo
+
