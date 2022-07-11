@@ -14,7 +14,9 @@ jobs:
       # Run a command in a Docker container      
       - name: On Python Container
         uses: docker://python:3.9
-        run: python --version
+        with:
+          entrypoint: /usr/local/bin/python
+          args: --version
 
   # Run a command in a Docker container   
   container-test-job:
