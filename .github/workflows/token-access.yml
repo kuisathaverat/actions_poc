@@ -11,9 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Try to leak a secret
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }}
-          python -c "print(' '.join('${{ secrets.GITHUB_TOKEN }}'))"
+          echo ${GH_TOKEN}
+          python -c "print(' '.join('${GH_TOKEN}'))"
           gh repo list
           gh repo create foo
 
