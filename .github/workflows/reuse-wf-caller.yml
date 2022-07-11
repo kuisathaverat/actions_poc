@@ -16,6 +16,6 @@ jobs:
 
   user-outputs:
     runs-on: ubuntu-latest
-    needs: job1
+    needs: call-workflow-passing-data
     steps:
       - run: echo ${{ needs.call-workflow-passing-data.outputs.firstword }} ${{ needs.call-workflow-passing-data.outputs.secondword }}
