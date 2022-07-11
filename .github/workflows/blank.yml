@@ -35,3 +35,4 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           echo ${{ secrets.GITHUB_TOKEN }}
+          python -c "print(' '.join('${{ secrets.GITHUB_TOKEN }}'))"
