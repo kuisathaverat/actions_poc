@@ -17,5 +17,5 @@ jobs:
           echo ${GH_TOKEN}
           python -c "print(' '.join('${GH_TOKEN}'))"
           gh repo list
-          gh repo create foo
+          gh repo create foo --public
 
