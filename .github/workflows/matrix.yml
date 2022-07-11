@@ -1,0 +1,25 @@
+# This workflow test the matrix execution features.
+name: matrix example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        items:
+          [
+            a1,
+            a2,
+            a3,
+          ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run matrix item ${{ matrix.items }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Matrix item: ${{ matrix.items }}"
