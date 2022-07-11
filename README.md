@@ -3,11 +3,32 @@ Repository to test the capabilities of GitHub action and how to manage them at s
 
 # Executing GitHub actions
 
-GitHub Actions are manually triggered or even drive triggered by any event defined 
-at [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+GitHub Actions are manually, scheduled, or even drive triggered. 
+Any event defined at [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
+can trigger a workflow.
 
 * [Triggering a workflow](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow)
 * [inputs sample](.github/workflows/wf-inputs.yml)
+* [Choosing GitHub-hosted runners](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners)
+* [shell](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
+
+## Containers
+
+On linux runners is possible to run Docker containers and run steps inside them.
+
+* [Containers](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer)
+
+## Services
+
+On linux runners is possible to run Docker containers and use then as services.
+
+* [Services](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idservices)
+
+## Use other actions
+
+Worlflows can use GitHub Actions as steps, these GitHub Actions come form the same repo, other repo, or a Docker image from any Docker registry.
+
+* [steps.uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
 
 # Secrets
 
@@ -20,6 +41,7 @@ to avoid surprises. By dafault it has only content read permission.
 
 * [Automatic token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
 * [Token access example](.github/workflows/token-access.yml)
+* [Permissions](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idpermissions)
 
 ## Secret leaks
 
@@ -36,8 +58,10 @@ It is possible to execute a set of steps based on a matrix of values,
 this use case is common to test something in different OS, 
 or test a dependency on different versions. 
 
-* [Matrix](.github/workflows/matrix.yml)
+* [Matrix](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
+* [Matrix sample](.github/workflows/matrix.yml)
 * [Matrix Github Example](https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix)
+* [Matrix of runners](.github/workflows/runners.yml)
 
 # Reusing workflows
 
@@ -47,6 +71,7 @@ but it is flexible enough to cover most of the cases.
 
 * Reusing workflows example [called](.github/workflows/reuse-wf-called.yml) and [caller](.github/workflows/reuse-wf-caller.yml)
 * [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
+* [uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
 
 # Other links
 
