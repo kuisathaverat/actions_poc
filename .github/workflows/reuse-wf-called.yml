@@ -27,11 +27,8 @@ jobs:
       output1: ${{ steps.step1.outputs.firstword }}
       output2: ${{ steps.step2.outputs.secondword }}
     steps:
-      - uses: ./.github/workflows/my-action
-        with:
-          username: ${{ inputs.username }}
-          token: ${{ secrets.envGhToken }}
-      - id: step1
-        run: echo "::set-output name=firstword::hello"
-      - id: step2
-        run: echo "::set-output name=secondword::world"
+      - run: |
+          echo "username: ${{ inputs.username }}"
+          echo "token: ${{ secrets.envGhToken }}"
+      - run: echo "::set-output name=firstword::hello"
+      - run: echo "::set-output name=secondword::world"
