@@ -1,0 +1,15 @@
+# This workflow test the reuse of workflows.
+# this workflow call a reusable workflow
+# see https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: reusing workflows caller
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-workflow-passing-data:
+    uses: kuisathaverat/actions_poc/.github/workflows/reuse-wf-called.yml@main
+    with:
+      username: foo
+    secrets:
+      envGhToken: ${{ secrets.GITHUB_TOKEN }}

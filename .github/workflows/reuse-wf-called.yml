@@ -1,0 +1,24 @@
+# This workflow test the reuse of workflows.
+# this workflow is a reusable workflow
+# see https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: reusing workflows called
+
+on:
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+    secrets:
+      envGhToken:
+        required: true
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: ./.github/workflows/my-action
+        with:
+          username: ${{ inputs.username }}
+          token: ${{ secrets.envGhToken }}
