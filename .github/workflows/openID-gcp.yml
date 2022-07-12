@@ -1,5 +1,5 @@
-# This workflow shows how to use OpenID tokens.
-name: OpenID token
+# This workflow shows how to use OpenID GCP tokens.
+name: OpenID GCP token
 
 permissions:
   contents: read
