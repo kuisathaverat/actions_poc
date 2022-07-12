@@ -63,9 +63,109 @@ to leak the password.
 
 ## OpenID
 
+### GCP
+* create a user account with permissions to the services needed (e.g. Compute Engine admin)
+* Create a Workload Identity Pools (IAM & admin/Workload Identity Pools)
+    * name: GitHub Actions OIDC token
+    * id: github-actions-oidc-token
+    * issuer: https://token.actions.githubusercontent.com
+    * Audiences: Default audience
+    * Attribute Mapping:
+        * google.subject: 'repo:kuisathaverat/actions_poc:ref:refs/heads/main'
+* Add the service account to the Workload Identity Pools (IAM & admin/Workload Identity Pools/GitHub Action identity pool pool details)
+
+### Vault
+
+In order to make some test, I have configured a HashiCorp Vault service on a VM in CGP.
+First of all we have to launch a VM and install HashiCorp Vault,
+for our test a `e2-micro` machine running Debian 10 is enough for our service.
+To install vault we can follow one of this tutorials [Web UI](https://learn.hashicorp.com/tutorials/vault/getting-started-ui?in=vault/getting-started), 
+or [DEploy Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-deploy?in=vault/getting-started).
+Try to configure everythin from the host conlose due the service does not have TSL enabled yet.
+We need a firewall rule to allow inbound TCP traffic to the port 8200 of the VM.
+The next step is to get a valid TSL certificate to run the server with TLS,
+the easy way is to use [certbot](https://certbot.eff.org/instructions?ws=other&os=debianbuster) to issue a certificate from [let's encrypt](https://letsencrypt.org/). You need a DNS name in order to issue the certificate so you can use `<IP>.nip.io` as a DNS name, 
+the `.nip.io` service will resolve the IP of your VM like a regular DNS.
+When you have the certificate you can edit the configuration of Vault to use TSL.
+```
+ui = true
+disable_mlock = true
+
+storage "raft" {
+  path    = "./vault/data"
+  node_id = "node1"
+}
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = "false"
+  tls_cert_file = "/home/user/fullchain.pem"
+  tls_key_file  = "/home/user/privkey.pem"
+}
+
+api_addr = "http://127.0.0.1:8200"
+cluster_addr = "https://127.0.0.1:8201"
+```
+
+From this point, you can use the UI to create a kv v2 secret engine,
+and some secrets to get from the GitHub Actions.
+We have everything ready to start.
+
+[hashicorp/vault-action](https://github.com/hashicorp/vault-action) require to enable JWT authentication.
+
+```bash
+export VAULT_ADDR=http://127.0.0.1:8200
+vault login
+vault auth enable jwt
+```
+
+When you have JWT authentication enabled you will need to configure the JWT with the following command
+
+```bash
+vault write auth/jwt/config \
+    oidc_discovery_url='https://token.actions.githubusercontent.com' \
+    bound_issuer='https://token.actions.githubusercontent.com'
+```
+
+finally you have to create a JWT role, 
+the important parameter here is the `bound_subject` that match with the `sub` attribute in the GitHub action request 
+(see [About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) and [JWT with GitHub OIDC Tokens](https://github.com/hashicorp/vault-action#jwt-with-github-oidc-tokens))
+
+```bash
+vault delete auth/jwt/role/githubactions
+vault write auth/jwt/role/githubactions \
+    role_type='jwt' \
+    bound_subject='repo:kuisathaverat/actions_poc:ref:refs/heads/main' \
+    bound_audiences='https://github.com/kuisathaverat' \
+    user_claim='repository' \
+    policies='default'
+```
+
+This is an alternative configuration that uses `bound_claims` with a wildcard value instead `bound_subject` to filter the requests.
+Note that the payload is JSON due a [bug with the maps in the commandline attributes](https://github.com/hashicorp/vault-plugin-auth-jwt/issues/68)
+```bash
+vault delete auth/jwt/role/githubactions
+vault write auth/jwt/role/githubactions -<<EOF
+{
+    "role_type": "jwt",
+    "bound_claims": {
+        "sub": "repo:kuisathaverat/*"
+    },
+    "bound_claims_type": "glob",
+    "bound_audiences": "https://github.com/kuisathaverat",
+    "user_claim": "repository"
+}
+EOF
+```
+
+* [OpenID Vault sample](.github/workflows/openID-vault.yml)
 * [About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 * [Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
 * [Configuring OpenID Connect in HashiCorp Vault](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-hashicorp-vault)
+
+notes:
+* cubbyhole engine is not accesible from the action
+* Vault path for the engine kv v2 are like <engine name>/data/<path>
 
 # Matrix execution support
 
