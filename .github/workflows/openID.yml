@@ -18,7 +18,7 @@ jobs:
         uses: 'google-github-actions/auth@v0.8.0'
         with:
             create_credentials_file: 'true'
-            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool'
+            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
             service_account: 'github-actions-tokens-generato@github-actions-356108.iam.gserviceaccount.com'
       - id: 'gcloud'
         name: 'gcloud'
