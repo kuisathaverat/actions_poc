@@ -19,7 +19,7 @@ jobs:
           role: githubactions
           method: jwt
           #jwtGithubAudience: <Audience>
-          secrets: secrets/foo value | VALUE_ENV_VAR
+          secrets: cubbyhole/secrets/foo value | VALUE_ENV_VAR
       - name: Use secret from Vault
         run: |
           echo "${VALUE_ENV_VAR}"
