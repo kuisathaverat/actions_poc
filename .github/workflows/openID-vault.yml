@@ -19,8 +19,8 @@ jobs:
           role: githubactions
           method: jwt
           jwtGithubAudience: https://github.com/kuisathaverat
-          jwtTtl: 30
-          secrets: secret/foo value | VALUE_ENV_VAR
+          #jwtTtl: 30
+          secrets: cubbyhole/foo value | VALUE_ENV_VAR
       - name: Use secret from Vault
         run: |
           echo "${VALUE_ENV_VAR}"
