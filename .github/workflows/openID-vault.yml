@@ -26,6 +26,8 @@ jobs:
         run: |
           echo "${VALUE_ENV_VAR}"
   secret02:
+    if: ${{ always() }}
+    needs: secret01
     runs-on: ubuntu-latest
     steps:
       - name: Retrieve secret from Vault
@@ -42,6 +44,8 @@ jobs:
         run: |
           echo "${VALUE_ENV_VAR}"
   secret03:
+    if: ${{ always() }}
+    needs: secret02
     runs-on: ubuntu-latest
     steps:
       - name: Retrieve secret from Vault
@@ -58,6 +62,8 @@ jobs:
         run: |
           echo "${VALUE_ENV_VAR}"
   secret04:
+    if: ${{ always() }}
+    needs: secret03
     runs-on: ubuntu-latest
     steps:
       - name: Retrieve secret from Vault
@@ -74,6 +80,8 @@ jobs:
         run: |
           echo "${VALUE_ENV_VAR}"
   secret05:
+    if: ${{ always() }}
+    needs: secret04
     runs-on: ubuntu-latest
     steps:
       - name: Retrieve secret from Vault
