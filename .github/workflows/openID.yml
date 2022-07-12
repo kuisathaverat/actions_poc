@@ -23,7 +23,5 @@ jobs:
       - id: 'gcloud'
         name: 'gcloud'
         run: |-
-          ls -la  ${{ steps.auth.outputs.credentials_file_path }}
-          cat ${{ steps.auth.outputs.credentials_file_path }}
           gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
           gcloud services list
