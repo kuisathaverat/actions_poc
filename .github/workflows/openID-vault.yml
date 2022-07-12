@@ -18,7 +18,7 @@ jobs:
           url: https://104.155.175.88.ip.es.io:8200
           role: githubactions
           method: jwt
-          #jwtGithubAudience: <Audience>
+          jwtGithubAudience: https://github.com/kuisathaverat
           secrets: cubbyhole/secrets/foo value | VALUE_ENV_VAR
       - name: Use secret from Vault
         run: |
