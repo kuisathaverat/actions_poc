@@ -14,8 +14,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo ${GH_TOKEN}
-          python -c "print(' '.join('${GH_TOKEN}'))"
           gh repo list
           gh repo create foo --public
 

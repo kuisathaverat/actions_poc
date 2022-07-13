@@ -5,14 +5,17 @@ permissions:
   contents: read
   id-token: write
 
+env:
+  INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
+  SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+
 on:
   workflow_dispatch:
 
 jobs:
   provision:
     runs-on: ubuntu-latest
-    env:
-      INSTANCE: github-action-runner-${{ GITHUB_ACTION }}-${{ GITHUB_RUN_NUMBER }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -20,8 +23,17 @@ jobs:
         uses: 'google-github-actions/auth@v0.8.0'
         with:
             create_credentials_file: 'true'
-            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
-            service_account: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+            workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+            service_account: ${{ env.SERVICE_ACCOUNT }}
+      - name: Get Token
+        run: |
+          echo "TOKEN=$(curl \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \ 
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token) |jq -r .token" >> $GITHUB_ENV
+      - name: mask Token
+        run: echo "::add-mask::${{ env.TOKEN }}"
       - name: 'Provision Runner'
         run: |-
           gcloud compute instances create ${INTANCE} \
@@ -38,7 +50,7 @@ jobs:
           curl -o actions-runner-linux-x64-2.294.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.294.0/actions-runner-linux-x64-2.294.0.tar.gz
           echo "a19a09f4eda5716e5d48ba86b6b78fc014880c5619b9dba4a059eaf65e131780  actions-runner-linux-x64-2.294.0.tar.gz" | sha256sum -c
           tar xzf ./actions-runner-linux-x64-2.294.0.tar.gz
-          ./config.sh --url https://github.com/kuisathaverat/actions_poc --token ${{ secrets.GITHUB_TOKEN }} --ephemeral --labels "self-hosted,Linux,X64" --url https://github.com/kuisathaverat/actions_poc --unattended 
+          ./config.sh --url https://github.com/kuisathaverat/actions_poc --token ${TOKEN} --ephemeral --labels "self-hosted,Linux,X64,foo" --url https://github.com/kuisathaverat/actions_poc --unattended 
           sudo ./svc.sh install $USER
           sudo ./svc.sh start
           EOF
@@ -46,7 +58,7 @@ jobs:
           gcloud compute ssh ${INTANCE} --command "$(cat runner.sh)"
 
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux, x64, foo]
     needs: provision
     steps:
       - run: echo uname -a
@@ -54,8 +66,6 @@ jobs:
   deprovision:
     runs-on: ubuntu-latest
     needs: build
-    env:
-      INSTANCE: github-action-runner-${{ GITHUB_ACTION }}-${{ GITHUB_RUN_NUMBER }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -63,8 +73,8 @@ jobs:
         uses: 'google-github-actions/auth@v0.8.0'
         with:
             create_credentials_file: 'true'
-            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
-            service_account: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+            workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+            service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: 'Provision Runner'
         run: |-
           gcloud compute instances delete ${INSTANCE} --zone=us-central1-a
