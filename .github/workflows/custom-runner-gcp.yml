@@ -6,7 +6,6 @@ permissions:
   id-token: write
 
 env:
-  INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
   WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
   SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
 
@@ -16,6 +15,8 @@ on:
 jobs:
   provision:
     runs-on: ubuntu-latest
+    env:
+      INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -65,6 +66,8 @@ jobs:
 
   deprovision:
     runs-on: ubuntu-latest
+    env:
+      INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
     needs: build
     steps:
       - uses: actions/checkout@v3
