@@ -15,10 +15,10 @@ jobs:
         with:
           repository: elastic/kibana
       - run: echo "$(cat .node-version)" >> $NODE_VERSION
-      - name: Use Node.js ${{ env::NODE_VERSION }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env::NODE_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
       - run: |
           export BABEL_DISABLE_CACHE=true
           export FORCE_COLOR=1
