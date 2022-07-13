@@ -2,10 +2,8 @@
 name: Custom runner
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
-  actions: write
-  security-events: write
 
 env:
   WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
