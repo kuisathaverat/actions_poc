@@ -17,7 +17,7 @@ jobs:
   provision:
     runs-on: ubuntu-latest
     outputs:
-      label: ${{ steps.provision.outputs.label }}
+      label: ${{ steps.set-label.outputs.label }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -31,11 +31,12 @@ jobs:
         run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
       - name: Get Token
         run: |
-          echo "TOKEN=$(curl -sS \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ secrets.PAT }}" \
-            https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)" >> $GITHUB_ENV
+          TOKEN=$(curl -sS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token ${{ secrets.PAT }}" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)
+          echo "TOKEN=${TOKEN}" >> $GITHUB_ENV
           echo "::add-mask::${TOKEN}"
       - name: 'Provision Runner'
         run: |-
@@ -68,11 +69,12 @@ jobs:
           EOF
 
           gcloud compute ssh ${INSTANCE} --command "$(cat runner.sh)" --zone=${{ env.GCP_ZONE }} --project=${{ env.CLOUDSDK_PROJECT }}
-      - run: echo "::set-output name=label::${INSTANCE}"
+      - id: set-label
+        run: echo "::set-output name=label::${INSTANCE}"
   
   build:
-    runs-on: ${{ needs.provision.outputs.label }}
     needs: provision
+    runs-on: ${{ needs.provisionr.outputs.label }}
     steps:
       - run: echo uname -a
 
