@@ -12,7 +12,7 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
-      REPOSITORY: ghcr.io/${{ github.repository }}
+      REPOSITORY: ghcr.io/kuisathaverat/actions_poc
       DEBIAN: 10
       BUILDX: 1 
     steps:
