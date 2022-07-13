@@ -27,6 +27,7 @@ jobs:
           token: ${{ secrets.PAT  }}
           project_id: ${{ env.CLOUDSDK_PROJECT }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
+          #  gcloud compute images list
           image_family: debian-11
           image_project: debian-cloud 
           machine_zone: us-central1-a
