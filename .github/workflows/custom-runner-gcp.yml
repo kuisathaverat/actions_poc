@@ -6,7 +6,7 @@ permissions:
   id-token: write
   actions: write
   security-events: write
-  
+
 env:
   WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
   SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
@@ -27,19 +27,13 @@ jobs:
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: Set INSTANCE env var
-        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
       - name: Get Token
         run: |
-          curl -sS \
-              -X POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq .
-
           echo "TOKEN=$(curl -sS \
             -X POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.PAT }}" \
             https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)" >> $GITHUB_ENV
       - name: mask Token
         run: echo "::add-mask::${TOKEN}"
