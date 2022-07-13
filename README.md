@@ -19,6 +19,7 @@ can trigger a workflow.
 * [Usage limits](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits)
 * [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
 * [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+* [Expresions](https://docs.github.com/en/actions/learn-github-actions/expressions)
 
 ## Containers
 
@@ -188,14 +189,56 @@ but it is flexible enough to cover most of the cases.
 * [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 * [uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
 
+# Self-hosted runners
+
+
+* [About self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
+
+# Features 
+
+* Simple
+* Zero learn curve
+* Marketplace with a huge action alredy implemented
+* Strong comunnity
+* Overall well Documented
+* GitHub integration
+* GCP/Azure/AWS/Vault OpenID integration
+* Easy tooling manage (Go, Node.js, Java, Docker,...)
+* Cache support for the most common build systems
+* Linux/Windows/masOS runners support
+* ONPrem runneers support
+* Reusable blocks of code (library of action/workflows)
+* Matrix jobs execution native support
+* Container services support
+* Artifact support
+* Mask secrets support
+* Logs messages group support
+
+
 # Other links
 
 * [Skipping workflow runs](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs)
 * [Deploying to Google Kubernetes Engine](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-google-kubernetes-engine)
-
+* [Working with the Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+* [Connecting a repository to a user-owned package on GitHub](https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package)
+* [Upgrading a workflow that accesses ghcr.io](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-ghcrio)
+* [Migrating from Jenkins to GitHub Actions](https://docs.github.com/en/actions/migrating-to-github-actions/migrating-from-jenkins-to-github-actions)
+* [Adding a workflow status badge](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge)
+* [Enabling debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
+* [Notifications for workflow runs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/notifications-for-workflow-runs)
 
 ## Actions
 
 * [github-script](https://github.com/actions/github-script) Write workflows scripting the GitHub API in JavaScript
 * [file-changes-action](https://github.com/trilom/file-changes-action) get outputs of all of the files that have changed in your repository
 * [cache](https://github.com/actions/cache) Cache dependencies and build outputs in GitHub Actions
+* [docker/metadata-action](https://github.com/docker/metadata-action) GitHub Action to extract metadata from Git reference and GitHub events.
+* [docker/build-push-action](https://github.com/docker/build-push-action) GitHub Action to build and push Docker images with Buildx with full support of the features provided by Moby BuildKit builder toolkit. 
+* [docker/setup-qemu-action](https://github.com/docker/setup-qemu-action) GitHub Action to install QEMU static binaries.
+* [setup-buildx-action](https://github.com/docker/setup-buildx-action) GitHub Action to set up Docker Buildx.
+* [docker/login-action](https://github.com/docker/login-action) GitHub Action to login against a Docker registry.
+* [create-or-update-comment](https://github.com/peter-evans/create-or-update-comment) A GitHub action to create or update an issue or pull request comment.
+* [actions/stale](https://github.com/actions/stale) Warns and then closes issues and PRs that have had no activity for a specified amount of time.
+* [labeler](https://github.com/andymckay/labeler) Automatically adds or removes labels from issues, pull requests and project cards.
+
+
