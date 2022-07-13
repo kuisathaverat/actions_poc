@@ -1,10 +1,12 @@
 # This workflow shows how to launch a custom runner in GitHub Actionsand use it
 name: Custom runner
 
-# permissions:
-#   contents: read
-#   id-token: write
-
+permissions:
+  contents: write
+  id-token: write
+  actions: write
+  security-events: write
+  
 env:
   WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
   SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
