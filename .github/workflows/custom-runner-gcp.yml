@@ -58,7 +58,7 @@ jobs:
           sudo ./bin/installdependencies.sh
           ./config.sh --url https://github.com/kuisathaverat/actions_poc \
             --token ${TOKEN} --ephemeral \
-            --labels "self-hosted,Linux,X64,foo" \
+            --labels "self-hosted,Linux,X64,${INSTANCE}" \
             --url https://github.com/kuisathaverat/actions_poc \
             --unattended \
             --disableupdate
