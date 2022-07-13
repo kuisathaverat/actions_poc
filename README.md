@@ -206,11 +206,15 @@ but it is flexible enough to cover most of the cases.
 * Easy tooling manage (Go, Node.js, Java, Docker,...)
 * Cache support for the most common build systems
 * Linux/Windows/masOS runners support
-* ONPrem runneers support
+* ONPrem runners support
+* Kubernetes runners implemented
+* AWS runners implemented
 * Reusable blocks of code (library of action/workflows)
+* Library code support unit tests
 * Matrix jobs execution native support
 * Container services support
-* Artifact support
+* Public/private Artifact repository (GitHub packages)
+* Public/private Docker registry (GitHub packages)
 * Mask secrets support
 * Logs messages group support
 
@@ -226,6 +230,7 @@ but it is flexible enough to cover most of the cases.
 * [Adding a workflow status badge](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge)
 * [Enabling debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
 * [Notifications for workflow runs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/notifications-for-workflow-runs)
+* [GitHub Actions self-hosted runners on Google Cloud](https://github.blog/2020-08-04-github-actions-self-hosted-runners-on-google-cloud/)
 
 ## Actions
 
@@ -240,5 +245,8 @@ but it is flexible enough to cover most of the cases.
 * [create-or-update-comment](https://github.com/peter-evans/create-or-update-comment) A GitHub action to create or update an issue or pull request comment.
 * [actions/stale](https://github.com/actions/stale) Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 * [labeler](https://github.com/andymckay/labeler) Automatically adds or removes labels from issues, pull requests and project cards.
-
-
+* [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
+* [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
+* [terraform-aws-github-runner](https://github.com/philips-labs/terraform-aws-github-runner) This Terraform module creates the required infrastructure needed to host GitHub Actions self-hosted, auto-scaling runners on AWS spot instances.
+* [Terraform / Packer project for scalable self hosted GitHub action runners on GCP](https://github.com/faberNovel/terraform-gcp-github-runner) This project leverages Terraform and Packer to deploy and maintain scalable self hosted GitHub actions runners infrastructure on GCP for a GitHub organization.
+* [gce-github-runner](https://github.com/related-sciences/gce-github-runner) Ephemeral GCE GitHub self-hosted runner.
