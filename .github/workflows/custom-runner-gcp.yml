@@ -25,7 +25,7 @@ jobs:
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: Set INSTANCE env var
-        run: echo "INSTANCE=github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}" >> $GITHUB_ENV
+        run: echo "INSTANCE=github-action-runner-${GITHUB_ACTION}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
       - name: Get Token
         run: |
           echo "TOKEN=$(curl \
