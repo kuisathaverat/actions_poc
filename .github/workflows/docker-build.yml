@@ -1,16 +1,15 @@
 # This workflow build a Docker container with buildx.
 name: Docker build
 
-permissions:
-  contents: read
-  packages: write
-
 on:
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       REPOSITORY: ghcr.io
       NAME: ${{ github.repository }}
