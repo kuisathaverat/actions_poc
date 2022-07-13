@@ -58,7 +58,7 @@ jobs:
           sudo ./svc.sh start
           EOF
 
-          gcloud compute ssh ${INSTANCE} --command "$(cat runner.sh)"
+          gcloud compute ssh ${INSTANCE} --command "$(cat runner.sh)" --zone=us-central1-a --project=github-actions-356108
 
   build:
     runs-on: [self-hosted, linux, x64, foo]
