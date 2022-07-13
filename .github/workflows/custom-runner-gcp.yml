@@ -32,15 +32,15 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github+json" \ 
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token) |jq -r .token" >> $GITHUB_ENV
+            https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)" >> $GITHUB_ENV
       - name: mask Token
-        run: echo "::add-mask::${{ env.TOKEN }}"
+        run: echo "::add-mask::${TOKEN}"
       - name: 'Provision Runner'
         run: |-
           echo "INSTANCE=${{ env.INSTANCE }}"
           echo "TOKEN=${{ env.TOKEN }}"
           gcloud compute instances create ${{ env.INSTANCE }} \
-            --tags="GitHubActions,ci,ephemeral,linux"
+            --tags="GitHubActions,ci,ephemeral,linux" \
             --project=github-actions-356108 \
             --zone=us-central1-a \
             --machine-type=e2-micro \
