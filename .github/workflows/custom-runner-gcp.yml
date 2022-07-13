@@ -37,6 +37,9 @@ jobs:
         run: echo "::add-mask::${TOKEN}"
       - name: 'Provision Runner'
         run: |-
+          echo "USER=$USER"
+          cd $HOME
+          pwd
           echo "INSTANCE=${{ env.INSTANCE }}"
           echo "TOKEN=${{ env.TOKEN }}"
           gcloud compute instances create ${{ env.INSTANCE }} \
@@ -53,7 +56,9 @@ jobs:
           curl -o actions-runner-linux-x64-2.294.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.294.0/actions-runner-linux-x64-2.294.0.tar.gz
           echo "a19a09f4eda5716e5d48ba86b6b78fc014880c5619b9dba4a059eaf65e131780  actions-runner-linux-x64-2.294.0.tar.gz" | sha256sum -c
           tar xzf ./actions-runner-linux-x64-2.294.0.tar.gz
-          ./config.sh --url https://github.com/kuisathaverat/actions_poc --token ${TOKEN} --ephemeral --labels "self-hosted,Linux,X64,foo" --url https://github.com/kuisathaverat/actions_poc --unattended 
+          ls -la
+          ./bin/installdependencies.sh
+          ./config.sh --url https://github.com/kuisathaverat/actions_poc --token ${TOKEN} --ephemeral --labels "self-hosted,Linux,X64,foo" --url https://github.com/kuisathaverat/actions_poc --unattended --disableupdate
           sudo ./svc.sh install $USER
           sudo ./svc.sh start
           EOF
