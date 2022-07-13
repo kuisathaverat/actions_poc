@@ -74,7 +74,7 @@ jobs:
   
   build:
     needs: provision
-    runs-on: ${{ needs.provisionr.outputs.label }}
+    runs-on: ${{ needs.provision.outputs.label }}
     steps:
       - run: echo uname -a
 
