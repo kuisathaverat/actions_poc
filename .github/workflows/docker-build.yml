@@ -1,0 +1,21 @@
+# This workflow build a Docker container with buildx.
+name: Docker build
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: git@github.com:elastic/golang-crossbuild.git
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18.3
+      - run: DEBIAN=10 BUILDX=1 make -C go/base build
