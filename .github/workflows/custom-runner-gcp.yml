@@ -45,7 +45,7 @@ jobs:
             --project=${{ env.CLOUDSDK_PROJECT }} \
             --zone=${{ env.GCP_ZONE }} \
             --machine-type=e2-micro \
-            --network-interface=network-tier=PREMIUM,subnet=default,no-address \
+            --network-interface=network-tier=PREMIUM,subnet=default \
             --maintenance-policy=MIGRATE
 
           cat > runner.sh <<EOF
