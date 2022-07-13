@@ -37,9 +37,9 @@ jobs:
         run: echo "::add-mask::${{ env.TOKEN }}"
       - name: 'Provision Runner'
         run: |-
-          echo "INTANCE=${{ env.INTANCE }}"
+          echo "INSTANCE=${{ env.INSTANCE }}"
           echo "TOKEN=${{ env.TOKEN }}"
-          gcloud compute instances create ${{ env.INTANCE }} \
+          gcloud compute instances create ${{ env.INSTANCE }} \
             --tags="GitHubActions,ci,ephemeral,linux"
             --project=github-actions-356108 \
             --zone=us-central1-a \
@@ -58,7 +58,7 @@ jobs:
           sudo ./svc.sh start
           EOF
 
-          gcloud compute ssh ${INTANCE} --command "$(cat runner.sh)"
+          gcloud compute ssh ${INSTANCE} --command "$(cat runner.sh)"
 
   build:
     runs-on: [self-hosted, linux, x64, foo]
@@ -80,4 +80,4 @@ jobs:
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: 'Provision Runner'
         run: |-
-          gcloud compute instances delete ${{ env.INTANCE }} --zone=us-central1-a
+          gcloud compute instances delete ${{ env.INSTANCE }} --zone=us-central1-a
