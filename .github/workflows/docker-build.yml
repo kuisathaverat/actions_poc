@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: git@github.com:elastic/golang-crossbuild.git
+          repository: elastic/golang-crossbuild
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
