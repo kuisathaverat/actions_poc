@@ -1,9 +1,9 @@
 # This workflow shows how to launch a custom runner in GitHub Actionsand use it
 name: Custom runner
 
-permissions:
-  contents: read
-  id-token: write
+# permissions:
+#   contents: read
+#   id-token: write
 
 env:
   WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
@@ -28,13 +28,13 @@ jobs:
         run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
       - name: Get Token
         run: |
-          curl \
+          curl -sS \
               -X POST \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq .
 
-          echo "TOKEN=$(curl \
+          echo "TOKEN=$(curl -sS \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
