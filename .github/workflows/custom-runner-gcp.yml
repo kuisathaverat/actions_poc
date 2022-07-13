@@ -33,8 +33,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.PAT }}" \
             https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)" >> $GITHUB_ENV
-      - name: mask Token
-        run: echo "::add-mask::${TOKEN}"
+          echo "::add-mask::${TOKEN}"
       - name: 'Provision Runner'
         run: |-
           echo "USER=$USER"
