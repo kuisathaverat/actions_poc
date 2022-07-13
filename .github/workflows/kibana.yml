@@ -14,12 +14,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: elastic/kibana
-      - run: echo "$(cat .node-version)" >> $NODE_VERSION
+      - run: echo "NODE_VERSION=$(cat .node-version)" >> $GITHUB_ENV
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - run: |
+          echo "::group::Env vars"
           export BABEL_DISABLE_CACHE=true
           export FORCE_COLOR=1
           export NODE_OPTIONS=" --max-old-space-size=4096"
@@ -28,12 +29,21 @@ jobs:
           BUILD_DOCKER_OPTS="--skip-initialize --skip-generic-folders --skip-platform-folders --skip-archives --docker-images --skip-docker-contexts "
           BUILD_DOCKER_OPTS="${BUILD_DOCKER_OPTS} --skip-docker-ubuntu"
           BUILD_DOCKER_OPTS="${BUILD_DOCKER_OPTS} --skip-docker-cloud"
+          echo "::endgroup::"
 
+          echo "::group::Bootstrap"
           npm install -g yarn
           time yarn kbn clean
           time yarn kbn bootstrap --prefer-offline --no-audit --link-duplicates
+          echo "::endgroup::"
+
+          echo "::group::Build binary"
           # build Linux package
           time node scripts/build
+          echo "::endgroup::"
+
+          echo "::group::Build Docker images"
           # build docker images
           # shellcheck disable=SC2086
           time node scripts/build ${BUILD_DOCKER_OPTS}
+          echo "::endgroup::"
