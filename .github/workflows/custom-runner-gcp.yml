@@ -37,7 +37,9 @@ jobs:
         run: echo "::add-mask::${{ env.TOKEN }}"
       - name: 'Provision Runner'
         run: |-
-          gcloud compute instances create ${INTANCE} \
+          echo "INTANCE=${{ env.INTANCE }}"
+          echo "TOKEN=${{ env.TOKEN }}"
+          gcloud compute instances create ${{ env.INTANCE }} \
             --tags="GitHubActions,ci,ephemeral,linux"
             --project=github-actions-356108 \
             --zone=us-central1-a \
@@ -78,4 +80,4 @@ jobs:
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: 'Provision Runner'
         run: |-
-          gcloud compute instances delete ${INSTANCE} --zone=us-central1-a
+          gcloud compute instances delete ${{ env.INTANCE }} --zone=us-central1-a
