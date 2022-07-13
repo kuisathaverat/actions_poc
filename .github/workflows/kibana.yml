@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
       - run: |
           echo "::group::Env vars"
           export BABEL_DISABLE_CACHE=true
