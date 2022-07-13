@@ -1,0 +1,70 @@
+# This workflow shows how to launch a custom runner in GitHub Actionsand use it
+name: Custom runner
+
+permissions:
+  contents: read
+  id-token: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    env:
+      INSTANCE: github-action-runner-${{ GITHUB_ACTION }}-${{ GITHUB_RUN_NUMBER }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v0.8.0'
+        with:
+            create_credentials_file: 'true'
+            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
+            service_account: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+      - name: 'Provision Runner'
+        run: |-
+          gcloud compute instances create ${INTANCE} \
+            --tags="GitHubActions,ci,ephemeral,linux"
+            --project=github-actions-356108 \
+            --zone=us-central1-a \
+            --machine-type=e2-micro \
+            --network-interface=network-tier=PREMIUM,subnet=default \
+            --maintenance-policy=MIGRATE \
+            --no-address
+
+          cat > runner.sh <<EOF
+          mkdir actions-runner && cd actions-runner
+          curl -o actions-runner-linux-x64-2.294.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.294.0/actions-runner-linux-x64-2.294.0.tar.gz
+          echo "a19a09f4eda5716e5d48ba86b6b78fc014880c5619b9dba4a059eaf65e131780  actions-runner-linux-x64-2.294.0.tar.gz" | sha256sum -c
+          tar xzf ./actions-runner-linux-x64-2.294.0.tar.gz
+          ./config.sh --url https://github.com/kuisathaverat/actions_poc --token ${{ secrets.GITHUB_TOKEN }} --ephemeral --labels "self-hosted,Linux,X64" --url https://github.com/kuisathaverat/actions_poc --unattended 
+          sudo ./svc.sh install $USER
+          sudo ./svc.sh start
+          EOF
+
+          gcloud compute ssh ${INTANCE} --command "$(cat runner.sh)"
+
+  build:
+    runs-on: self-hosted
+    needs: provision
+    steps:
+      - run: echo uname -a
+
+  deprovision:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      INSTANCE: github-action-runner-${{ GITHUB_ACTION }}-${{ GITHUB_RUN_NUMBER }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v0.8.0'
+        with:
+            create_credentials_file: 'true'
+            workload_identity_provider: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
+            service_account: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+      - name: 'Provision Runner'
+        run: |-
+          gcloud compute instances delete ${INSTANCE} --zone=us-central1-a
