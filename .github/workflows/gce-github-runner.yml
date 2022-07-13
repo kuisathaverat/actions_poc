@@ -44,4 +44,4 @@ jobs:
       - uses: related-sciences/gce-github-runner@535b7c755131a1ab32ab2388bf907c716932376a
         with:
           command: stop
-        if: always()
+        if: ${{ always() }}
