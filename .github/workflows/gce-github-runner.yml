@@ -28,7 +28,7 @@ jobs:
           project_id: ${{ env.CLOUDSDK_PROJECT }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           image_family: debian-11
-          machine_zone: central1-a
+          machine_zone: us-central1-a
           machine-type: e2-micro 
 
 
