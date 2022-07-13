@@ -25,9 +25,15 @@ jobs:
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: Set INSTANCE env var
-        run: echo "INSTANCE=github-action-runner-${GITHUB_ACTION}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
       - name: Get Token
         run: |
+          curl \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \ 
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq .
+
           echo "TOKEN=$(curl \
             -X POST \
             -H "Accept: application/vnd.github+json" \ 
