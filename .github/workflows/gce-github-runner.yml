@@ -1,0 +1,60 @@
+
+
+# This workflow shows how to launch a custom runner in GitHub Actions and use it
+name: Test gce-github-runner
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
+  SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-runner:
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.create-runner.outputs.label }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v0.8.0'
+        with:
+            create_credentials_file: 'true'
+            workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+            service_account: ${{ env.SERVICE_ACCOUNT }}
+      - name: Get Token
+        run: |
+          echo "GH_SA_TOKEN=$(curl -sS \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token ${{ secrets.PAT }}" \
+            https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)" >> $GITHUB_ENV
+      - name: Get GCP credentials
+        run: echo "GCP_SA_KEY=$(cat ${GOOGLE_APPLICATION_CREDENTIALS})" >> $GITHUB_ENV
+      - name: mask env vars
+        run: |
+          echo "::add-mask::${GH_SA_TOKEN}"
+          echo "::add-mask::${GCP_SA_KEY}"
+      - id: create-runner
+        uses: related-sciences/gce-github-runner@535b7c755131a1ab32ab2388bf907c716932376a
+        with:
+          token: ${{ env.GH_SA_TOKEN }}
+          project_id: ${{ env.CLOUDSDK_PROJECT }}
+          service_account_key: ${{ env.GCP_SA_KEY }}
+          image_family: debian-11
+
+  test:
+    needs: create-runner
+    runs-on: ${{ needs.create-runner.outputs.label }}
+    steps:
+      - run: echo "This runs on the GCE runner VM"
+      - uses: related-sciences/gce-github-runner@535b7c755131a1ab32ab2388bf907c716932376a
+        with:
+          command: stop
+        if: always()
