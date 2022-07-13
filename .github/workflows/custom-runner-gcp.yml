@@ -61,6 +61,8 @@ jobs:
             --url https://github.com/kuisathaverat/actions_poc \
             --unattended \
             --disableupdate
+          ls -la 
+          pwd
           sudo ./svc.sh install $USER
           sudo ./svc.sh start
           EOF

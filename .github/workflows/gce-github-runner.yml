@@ -32,6 +32,7 @@ jobs:
           image_project: debian-cloud 
           machine_zone: us-central1-a
           machine_type: e2-micro 
+          runner_ver: 2.294.0
 
 
   test:
