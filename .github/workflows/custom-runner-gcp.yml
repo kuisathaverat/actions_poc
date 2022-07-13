@@ -42,7 +42,7 @@ jobs:
           echo "INSTANCE=${{ env.INSTANCE }}"
           echo "TOKEN=${{ env.TOKEN }}"
           gcloud compute instances create ${{ env.INSTANCE }} \
-            --tags="GitHubActions,ci,ephemeral,linux" \
+            --tags="githubactions,ci,ephemeral,linux" \
             --project=github-actions-356108 \
             --zone=us-central1-a \
             --machine-type=e2-micro \
