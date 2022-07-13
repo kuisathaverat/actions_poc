@@ -15,6 +15,8 @@ on:
 jobs:
   provision:
     runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.provision.outputs.label }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -64,9 +66,10 @@ jobs:
           EOF
 
           gcloud compute ssh ${INSTANCE} --command "$(cat runner.sh)" --zone=us-central1-a --project=github-actions-356108
-
+      - run: echo "::set-output name=label::${INSTANCE}"
+  
   build:
-    runs-on: ${{ env.INSTANCE }}
+    runs-on: ${{ needs.provision.outputs.label }}
     needs: provision
     steps:
       - run: echo uname -a
@@ -84,6 +87,6 @@ jobs:
             create_credentials_file: 'true'
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
-      - name: 'Provision Runner'
+      - name: 'Deprovision Runner'
         run: |-
           gcloud compute instances delete ${{ env.INSTANCE }} --zone=us-central1-a
