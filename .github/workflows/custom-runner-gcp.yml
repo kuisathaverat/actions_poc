@@ -105,6 +105,8 @@ jobs:
       - name: 'Deprovision Runner'
         run: |-
           cat > uninstall.sh <<EOF
+          ls -la 
+          pwd
           sudo ./svc.sh stop
           sudo ./svc.sh uninstall $USER
           ./config.sh remove --token ${TOKEN}
