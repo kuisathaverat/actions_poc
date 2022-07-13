@@ -1,0 +1,39 @@
+# This workflow build a Kibana.
+name: Kibana build
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: elastic/kibana
+      - run: echo "$(cat .node-version)" >> $NODE_VERSION
+      - name: Use Node.js ${{ env::NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env::NODE_VERSION }}
+      - run: |
+          export BABEL_DISABLE_CACHE=true
+          export FORCE_COLOR=1
+          export NODE_OPTIONS=" --max-old-space-size=4096"
+          export BUILD_TS_REFS_DISABLE="true"
+
+          BUILD_DOCKER_OPTS="--skip-initialize --skip-generic-folders --skip-platform-folders --skip-archives --docker-images --skip-docker-contexts "
+          BUILD_DOCKER_OPTS="${BUILD_DOCKER_OPTS} --skip-docker-ubuntu"
+          BUILD_DOCKER_OPTS="${BUILD_DOCKER_OPTS} --skip-docker-cloud"
+
+          npm install -g yarn
+          time yarn kbn clean
+          time yarn kbn bootstrap --prefer-offline --no-audit --link-duplicates
+          # build Linux package
+          time node scripts/build
+          # build docker images
+          # shellcheck disable=SC2086
+          time node scripts/build ${BUILD_DOCKER_OPTS}
