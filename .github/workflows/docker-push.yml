@@ -1,0 +1,35 @@
+# This workflow push a Docker container .
+name: Docker push
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      REGISTRY: ghcr.io
+      REPOSITORY: ghcr.io/kuisathaverat/actions_poc
+      DEBIAN: 10
+      BUILDX: 1 
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: elastic/opbeans-go
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/kuisatorg/actions_poc:latest,ghcr.io/kuisathaverat/actions_poc:latest
