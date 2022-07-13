@@ -15,8 +15,6 @@ on:
 jobs:
   provision:
     runs-on: ubuntu-latest
-    env:
-      INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
     steps:
       - uses: actions/checkout@v3
       - id: 'auth'
@@ -26,6 +24,8 @@ jobs:
             create_credentials_file: 'true'
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
+      - name: Set INSTANCE env var
+        run: echo "INSTANCE=github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}" >> $GITHUB_ENV
       - name: Get Token
         run: |
           echo "TOKEN=$(curl \
@@ -66,8 +66,6 @@ jobs:
 
   deprovision:
     runs-on: ubuntu-latest
-    env:
-      INSTANCE: github-action-runner-${{ env.GITHUB_ACTION }}-${{ env.GITHUB_RUN_NUMBER }}
     needs: build
     steps:
       - uses: actions/checkout@v3
