@@ -25,4 +25,4 @@ jobs:
           curl -sSO --connect-timeout 10 --retry 30 --retry-delay 10 "${JENKINS_URL}/jnlpJars/jenkins-cli.jar"
           java -jar jenkins-cli.jar -s "${JENKINS_URL}/" -webSocket build test
           sleep 20
-          docker logs $(docker ps -q  --filter ancestor=jenkins)
+          docker logs $(docker ps |grep ghcr.io/kuisathaverat/jenkins:latest|cut -d " " -f 1)
