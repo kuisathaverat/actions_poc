@@ -17,5 +17,5 @@ runs:
   using: "composite"
   steps:
     - id: api_call
-      run: .github/actions/get-runner-token/entrypoint.sh ${{ inputs.pat }} ${{ inputs.repository }}
+      run: ${{ github.action_path }}/entrypoint.sh ${{ inputs.pat }} ${{ inputs.repository }}
       shell: bash
