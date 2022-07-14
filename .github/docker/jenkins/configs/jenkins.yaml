@@ -12,7 +12,7 @@ jenkins:
 unclassified:
   location:
     adminAddress: robots@elastic.co
-    url: http://localhost:18080/
+    url: http://localhost:8080/
   gitscm:
     globalConfigName: username
     globalConfigEmail: username@example.com

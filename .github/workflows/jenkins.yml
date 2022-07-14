@@ -10,7 +10,7 @@ jobs:
       jenkins:
         image: ghcr.io/kuisathaverat/jenkins:latest
         ports:
-          - 8080:8080
+          - 8080
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.github_token }}
@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          JENKINS_URL="http://localhost:8080"
+          PORT=${{ job.services.jenkins.ports['8080'] }}
+          JENKINS_URL="http://localhost:${PORT}"
           curl -sSO http://localhost:8080/jnlpJars/jenkins-cli.jar
           java -jar jenkins-cli.jar -s "${JENKINS_URL}/" -webSocket build test
