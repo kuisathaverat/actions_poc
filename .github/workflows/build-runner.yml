@@ -12,7 +12,7 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
-      DOCKER_IMAGE: kuisathaverat/actions_poc/runner
+      DOCKER_IMAGE: kuisathaverat/actions_poc
     steps:
       - uses: actions/checkout@v3
 
