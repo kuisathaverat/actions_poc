@@ -22,6 +22,6 @@ jobs:
       - run: |
           PORT=${{ job.services.jenkins.ports['8080'] }}
           JENKINS_URL="http://127.0.0.1:${PORT}"
-          curl -sSO --connect-timeout 10 --retry 30 --retry-delay 10 http://localhost:8080/jnlpJars/jenkins-cli.jar
+          curl -sSO --connect-timeout 10 --retry 30 --retry-delay 10 "${JENKINS_URL}/jnlpJars/jenkins-cli.jar"
           java -jar jenkins-cli.jar -s "${JENKINS_URL}/" -webSocket build test
           docker ps
