@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: github-actions-runner
+  name: {{ .INSTANCE }}
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-actions-runner
+  template:
+    metadata:
+      labels:
+        app: github-actions-runner
+    spec:
+      containers:
+      - env:
+        - name: TOKEN
+          value: {{ .TOKEN }}
+        - name: REPO_URL
+          value: {{ .REPO_URL }}
+        - name: INSTANCE
+          value: {{ .INSTANCE }}
+        image: ghcr.io/kuisathaverat/actions_poc/runner:latest
+        imagePullPolicy: Always
+        name: runner
+        resources:
+          limits:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 2Gi
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh","-c","/home/runner/actions-runner/uninstall.sh"]
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

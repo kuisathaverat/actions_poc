@@ -29,4 +29,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.actor }}/actions_poc
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/actions_poc
