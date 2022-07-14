@@ -19,3 +19,12 @@ jobs:
       - name: Try to leak a secret
         run: |
           python -c "print(' '.join('${{ steps.get_runner_token_docker.outputs.token }}'))"
+
+      - id: get_runner_token
+        uses: ./.github/actions/get-runner-token/
+        with:
+          pat: ${{ secrets.PAT }}
+          repository: ${{ github.repository }}
+      - name: Try to leak a secret
+        run: |
+          python -c "print(' '.join('${{ steps.get_runner_token.outputs.token }}'))"
