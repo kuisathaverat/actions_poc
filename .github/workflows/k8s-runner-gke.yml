@@ -1,0 +1,98 @@
+# This workflow shows how to launch a k8s runner in GitHub Actionsand use it
+name: k8s runner
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/844024446343/locations/global/workloadIdentityPools/github-action-identity-pool/providers/github-actions-oidc-token'
+  SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
+  GCP_ZONE: us-central1
+  GKE_CLUSTER: autopilot-cluster-1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.set-label.outputs.label }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v0.8.0'
+        with:
+            create_credentials_file: 'true'
+            workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+            service_account: ${{ env.SERVICE_ACCOUNT }}
+      - name: Set INSTANCE env var
+        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
+      - name: Get Token
+        run: |
+          TOKEN=$(curl -sS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token ${{ secrets.PAT }}" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)
+          echo "TOKEN=${TOKEN}" >> $GITHUB_ENV
+          echo "::add-mask::${TOKEN}"
+
+      - id: 'get-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v0a5f57b989b81d2725178cda257a00acf7d6bb5f'
+        with:
+          cluster_name: ${{ GKE_CLUSTER }}
+          location: ${{ GCP_ZONE }}
+
+      # The KUBECONFIG env var is automatically exported and picked up by kubectl.
+      - id: 'get-pods'
+        run: 'kubectl get pods'
+
+      - name: 'Provision Runner'
+        run: |-
+          set -e
+          sed -e 's#{{ .TOKEN }}#foo#' -e 's#{{ .REPO_URL }}#${{ REPO_URL }}#' -e 's#{{ .INSTANCE }}#${{ env.INSTANCE }}#' .github/k8s/runner.yml > runner.yml
+          kubectl apply -f runner.yml
+      - id: set-label
+        run: echo "::set-output name=label::${INSTANCE}"
+  
+  build:
+    needs: provision
+    runs-on: ${{ needs.provision.outputs.label }}
+    steps:
+      - run: echo uname -a
+
+  deprovision:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ always() }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v0.8.0'
+        with:
+            create_credentials_file: 'true'
+            workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+            service_account: ${{ env.SERVICE_ACCOUNT }}
+      - id: 'get-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v0a5f57b989b81d2725178cda257a00acf7d6bb5f'
+        with:
+          cluster_name: ${{ GKE_CLUSTER }}
+          location: ${{ GCP_ZONE }}
+      - name: Set INSTANCE env var
+        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
+      - name: Get Token
+        run: |
+          TOKEN=$(curl -sS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token ${{ secrets.PAT }}" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token |jq -r .token)
+          echo "TOKEN=${TOKEN}" >> $GITHUB_ENV
+          echo "::add-mask::${TOKEN}"
+      - name: 'Deprovision Runner'
+        run: |-
+          kubectl delete deployments/${{ env.INSTANCE }} 
