@@ -1,0 +1,21 @@
+jenkins:
+  systemMessage: "Configured automatically with JCasC plugin\n\n"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  labelString: flyweight
+  numExecutors: 5
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 2
+
+unclassified:
+  location:
+    adminAddress: robots@elastic.co
+    url: http://localhost:18080/
+  gitscm:
+    globalConfigName: username
+    globalConfigEmail: username@example.com
+
+jobs:
+  - file: "/Jenkinsfile.dsl"
