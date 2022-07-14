@@ -7,6 +7,7 @@ GitHub Actions are manually, scheduled, or even drive triggered.
 Any event defined at [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 can trigger a workflow.
 
+* [starter-workflows](https://github.com/actions/starter-workflows) These are the workflow files for helping people get started with GitHub Actions.
 * [Triggering a workflow](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow)
 * [inputs sample](.github/workflows/wf-inputs.yml)
 * [Choosing GitHub-hosted runners](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners)
@@ -191,8 +192,20 @@ but it is flexible enough to cover most of the cases.
 
 # Self-hosted runners
 
+It is possible to use self-hosted runners, these runners are any kind of VM/machine/pod/... 
+that can run the [runner app](https://github.com/actions/runner).
+It is easy to provision a runner inside the same workflow you are running and deprovision it at the end of the workflow,
+also there are several implementations to provision runners on diferent cloud providers based on a GitHub app to request the provision/deprovision.
 
+* [On demand GCP runner sample](.github/workflows/custom-runner-gcp.yml)
+* [On demand GKE runner sample](.github/workflows/k8s-runner-gke.yml)
+* [On demand GCP runner sample ussing an Action](.github/workflows/gce-github-runner.yml)
 * [About self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
+* [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
+* [terraform-aws-github-runner](https://github.com/philips-labs/terraform-aws-github-runner) This Terraform module creates the required infrastructure needed to host GitHub Actions self-hosted, auto-scaling runners on AWS spot instances.
+* [Terraform / Packer project for scalable self hosted GitHub action runners on GCP](https://github.com/faberNovel/terraform-gcp-github-runner) This project leverages Terraform and Packer to deploy and maintain scalable self hosted GitHub actions runners infrastructure on GCP for a GitHub organization.
+* [gce-github-runner](https://github.com/related-sciences/gce-github-runner) Ephemeral GCE GitHub self-hosted runner.
+* [orka-actions-up](https://github.com/marketplace/actions/orka-actions-up) Run self-hosted, macOS workflows on MacStadium's Orka.
 
 # Features 
 
@@ -209,6 +222,7 @@ but it is flexible enough to cover most of the cases.
 * ONPrem runners support
 * Kubernetes runners implemented
 * AWS runners implemented
+* Orka runners implemented
 * Reusable blocks of code (library of action/workflows)
 * Library code support unit tests
 * Matrix jobs execution native support
@@ -231,6 +245,7 @@ but it is flexible enough to cover most of the cases.
 * [Enabling debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
 * [Notifications for workflow runs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/notifications-for-workflow-runs)
 * [GitHub Actions self-hosted runners on Google Cloud](https://github.blog/2020-08-04-github-actions-self-hosted-runners-on-google-cloud/)
+* [Security hardening for GitHub Actions](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)
 
 ## Actions
 
@@ -245,8 +260,14 @@ but it is flexible enough to cover most of the cases.
 * [create-or-update-comment](https://github.com/peter-evans/create-or-update-comment) A GitHub action to create or update an issue or pull request comment.
 * [actions/stale](https://github.com/actions/stale) Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 * [labeler](https://github.com/andymckay/labeler) Automatically adds or removes labels from issues, pull requests and project cards.
-* [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
-* [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
-* [terraform-aws-github-runner](https://github.com/philips-labs/terraform-aws-github-runner) This Terraform module creates the required infrastructure needed to host GitHub Actions self-hosted, auto-scaling runners on AWS spot instances.
-* [Terraform / Packer project for scalable self hosted GitHub action runners on GCP](https://github.com/faberNovel/terraform-gcp-github-runner) This project leverages Terraform and Packer to deploy and maintain scalable self hosted GitHub actions runners infrastructure on GCP for a GitHub organization.
-* [gce-github-runner](https://github.com/related-sciences/gce-github-runner) Ephemeral GCE GitHub self-hosted runner.
+Actions on your Kubernetes cluster.
+* [ossf-scorecard-action](https://github.com/marketplace/actions/ossf-scorecard-action) Official GitHub Action for OSSF Scorecards.
+* [rotate-gcp-service-account-keys](https://github.com/marketplace/actions/rotate-gcp-service-account-keys) This action rotates GCP service account keys.
+* [google-github-actions/get-gke-credentials](https://github.com/google-github-actions/get-gke-credentials) This action configures authentication to a GKE cluster via a kubeconfig file that can be used with kubectl or other methods of interacting with the cluster.
+* [actions/snyk](https://github.com/marketplace/actions/snyk) A set of GitHub Action for using Snyk to check for vulnerabilities in your GitHub projects.
+* [actions/kubernetes-security-config-watch](https://github.com/marketplace/actions/kubernetes-security-config-watch) This Git Action run security lint check against Kubernetes workloads in Git workflow (PR open, commit pushed etc.).
+* [actions/hashicorp-setup-terraform](https://github.com/marketplace/actions/hashicorp-setup-terraform) The hashicorp/setup-terraform action is a JavaScript action that sets up Terraform CL.
+* [actions/packer-github-actions](https://github.com/marketplace/actions/packer-github-actions) GitHub Action for running Packer commands.
+* [actions/slack-send](https://github.com/marketplace/actions/slack-send) Send data into Slack using this GitHub Action! 
+* [actions/jenkinsfile-runner-prepackaged](https://github.com/marketplace/actions/jenkinsfile-runner-prepackaged) This is a POC how to run Jenkinsfiles inside GitHub Actions.
+
