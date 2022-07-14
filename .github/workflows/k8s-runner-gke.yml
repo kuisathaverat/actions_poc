@@ -29,7 +29,7 @@ jobs:
             workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
             service_account: ${{ env.SERVICE_ACCOUNT }}
       - name: Set INSTANCE env var
-        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
+        run: echo "INSTANCE=github-action-runner-k8s-${GITHUB_SHA}" >> $GITHUB_ENV
       - name: Get Token
         run: |
           TOKEN=$(curl -sS \
@@ -43,8 +43,8 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v0a5f57b989b81d2725178cda257a00acf7d6bb5f'
         with:
-          cluster_name: ${{ GKE_CLUSTER }}
-          location: ${{ GCP_ZONE }}
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GCP_ZONE }}
 
       # The KUBECONFIG env var is automatically exported and picked up by kubectl.
       - id: 'get-pods'
@@ -80,10 +80,10 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v0a5f57b989b81d2725178cda257a00acf7d6bb5f'
         with:
-          cluster_name: ${{ GKE_CLUSTER }}
-          location: ${{ GCP_ZONE }}
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GCP_ZONE }}
       - name: Set INSTANCE env var
-        run: echo "INSTANCE=github-action-runner-${GITHUB_SHA}" >> $GITHUB_ENV
+        run: echo "INSTANCE=github-action-runner-k8s-${GITHUB_SHA}" >> $GITHUB_ENV
       - name: Get Token
         run: |
           TOKEN=$(curl -sS \
