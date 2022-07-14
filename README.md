@@ -196,10 +196,18 @@ It is possible to use self-hosted runners, these runners are any kind of VM/mach
 that can run the [runner app](https://github.com/actions/runner).
 It is easy to provision a runner inside the same workflow you are running and deprovision it at the end of the workflow,
 also there are several implementations to provision runners on diferent cloud providers based on a GitHub app to request the provision/deprovision.
-
+In the PoC we have implemented 3 ways to deploy a runner:
 * [On demand GCP runner sample](.github/workflows/custom-runner-gcp.yml)
 * [On demand GKE runner sample](.github/workflows/k8s-runner-gke.yml)
 * [On demand GCP runner sample ussing an Action](.github/workflows/gce-github-runner.yml)
+* [Runner Docker container](.github/docker/runner)
+
+The three ways use the workflow pattern provision->build->deprovision, 
+this approacha can apply to any Cloud provider,
+To provision operation you can use a CLI tool, Terraform, or other way to provision resources.
+In the k8s sample, we use a Docker container with the runner installed along witha a k8s manifest file to define runner pod.
+To make the deploy `kubeclt` is the tools used to provision and deprovision the pod.
+
 * [About self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
 * [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) This controller operates self-hosted runners for GitHub Actions on your Kubernetes cluster.
 * [terraform-aws-github-runner](https://github.com/philips-labs/terraform-aws-github-runner) This Terraform module creates the required infrastructure needed to host GitHub Actions self-hosted, auto-scaling runners on AWS spot instances.
