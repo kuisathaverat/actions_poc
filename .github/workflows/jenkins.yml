@@ -15,12 +15,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.github_token }}
         # volumes:
-        #   - ./.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
+        #   - full path/.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: |
           PORT=${{ job.services.jenkins.ports['8080'] }}
-          JENKINS_URL="http://localhost:${PORT}"
-          curl -sSO http://localhost:8080/jnlpJars/jenkins-cli.jar
+          JENKINS_URL="http://127.0.0.1:${PORT}"
+          curl -sSO --connect-timeout 10 --retry 30 --retry-delay 10 http://localhost:8080/jnlpJars/jenkins-cli.jar
           java -jar jenkins-cli.jar -s "${JENKINS_URL}/" -webSocket build test
+          docker ps
