@@ -53,7 +53,7 @@ jobs:
       - name: 'Provision Runner'
         run: |-
           set -e
-          sed -e 's#{{ .TOKEN }}#foo#' -e 's#{{ .REPO_URL }}#${{ REPO_URL }}#' -e 's#{{ .INSTANCE }}#${{ env.INSTANCE }}#' .github/k8s/runner.yml > runner.yml
+          sed -e 's#{{ .TOKEN }}#${{ env.TOKEN }}#' -e 's#{{ .REPO_URL }}#${{ env.REPO_URL }}#' -e 's#{{ .INSTANCE }}#${{ env.INSTANCE }}#' .github/k8s/runner.yml > runner.yml
           kubectl apply -f runner.yml
       - id: set-label
         run: echo "::set-output name=label::${INSTANCE}"
