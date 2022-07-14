@@ -9,7 +9,7 @@ can trigger a workflow.
 
 * [starter-workflows](https://github.com/actions/starter-workflows) These are the workflow files for helping people get started with GitHub Actions.
 * [Triggering a workflow](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow)
-* [inputs sample](.github/workflows/wf-inputs.yml)
+* [inputs example](.github/workflows/wf-inputs.yml)
 * [Choosing GitHub-hosted runners](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#choosing-github-hosted-runners)
 * [shell](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 * [Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
@@ -160,7 +160,7 @@ vault write auth/jwt/role/githubactions -<<EOF
 EOF
 ```
 
-* [OpenID Vault sample](.github/workflows/openID-vault.yml)
+* [OpenID Vault example](.github/workflows/openID-vault.yml)
 * [About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 * [Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
 * [Configuring OpenID Connect in HashiCorp Vault](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-hashicorp-vault)
@@ -176,7 +176,7 @@ this use case is common to test something in different OS,
 or test a dependency on different versions. 
 
 * [Matrix](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
-* [Matrix sample](.github/workflows/matrix.yml)
+* [Matrix example](.github/workflows/matrix.yml)
 * [Matrix Github Example](https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix)
 * [Matrix of runners](.github/workflows/runners.yml)
 
@@ -190,6 +190,26 @@ but it is flexible enough to cover most of the cases.
 * [Reusing workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 * [uses](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
 
+# Building Custom GitHub Actions
+
+Another way to exted GitHub action is to create GitHub Action,
+A gitHub Action could be something as simple as a Docker container or an script.
+In this PoC we have converted the logic we use to generate a Runner Token to a GitHub Action,
+we have made a Docker version and a composite version.
+
+A Composite GitHub Actions and use other GitHub Actions, 
+this make possible to bundle funcionality or wrap other GitHub Actions.
+In the composite example we have used a bash script,
+but is possible to use any shell or script language supported (bash, powershell, Python, Node.js, ...).
+Python is probably a good candidate, it is a good script language, 
+with it has tons of libraries, and support for unit tests.
+
+* [Get Runner Token GitHub Action Composite version](.github/actions/get-runner-token)
+* [Get Runner Token GitHub Action Docker version](.github/actions/get-runner-token-docker)
+* [Creating a Docker container action](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action)
+* [Creating a composite action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
+* [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
+
 # Self-hosted runners
 
 It is possible to use self-hosted runners, these runners are any kind of VM/machine/pod/... 
@@ -197,15 +217,15 @@ that can run the [runner app](https://github.com/actions/runner).
 It is easy to provision a runner inside the same workflow you are running and deprovision it at the end of the workflow,
 also there are several implementations to provision runners on diferent cloud providers based on a GitHub app to request the provision/deprovision.
 In the PoC we have implemented 3 ways to deploy a runner:
-* [On demand GCP runner sample](.github/workflows/custom-runner-gcp.yml)
-* [On demand GKE runner sample](.github/workflows/k8s-runner-gke.yml)
-* [On demand GCP runner sample ussing an Action](.github/workflows/gce-github-runner.yml)
+* [On demand GCP runner example](.github/workflows/custom-runner-gcp.yml)
+* [On demand GKE runner example](.github/workflows/k8s-runner-gke.yml)
+* [On demand GCP runner example ussing an Action](.github/workflows/gce-github-runner.yml)
 * [Runner Docker container](.github/docker/runner)
 
 The three ways use the workflow pattern provision->build->deprovision, 
 this approacha can apply to any Cloud provider,
 To provision operation you can use a CLI tool, Terraform, or other way to provision resources.
-In the k8s sample, we use a Docker container with the runner installed along witha a k8s manifest file to define runner pod.
+In the k8s example, we use a Docker container with the runner installed along witha a k8s manifest file to define runner pod.
 To make the deploy `kubeclt` is the tools used to provision and deprovision the pod.
 
 * [About self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
@@ -223,14 +243,15 @@ To make the deploy `kubeclt` is the tools used to provision and deprovision the 
 * Strong comunnity
 * Overall well Documented
 * GitHub integration
-* GCP/Azure/AWS/Vault OpenID integration
-* Easy tooling manage (Go, Node.js, Java, Docker,...)
-* Cache support for the most common build systems
+* Security managed along with GitHub access
 * Linux/Windows/masOS runners support
+* Easy tooling manage (Go, Node.js, Java, Docker,...)
+* GCP/Azure/AWS/Vault OpenID integration
 * ONPrem runners support
 * Kubernetes runners implemented
 * AWS runners implemented
 * Orka runners implemented
+* Cache support for the most common build systems
 * Reusable blocks of code (library of action/workflows)
 * Library code support unit tests
 * Matrix jobs execution native support
@@ -243,6 +264,7 @@ To make the deploy `kubeclt` is the tools used to provision and deprovision the 
 
 # Other links
 
+* [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
 * [Skipping workflow runs](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs)
 * [Deploying to Google Kubernetes Engine](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-google-kubernetes-engine)
 * [Working with the Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
