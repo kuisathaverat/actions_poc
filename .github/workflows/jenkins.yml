@@ -1,5 +1,5 @@
 # This workflow to run Jenkins in a GitHub Action.
-name: Jenkinsrunner GitHub Action
+name: Jenkins running as a service
 
 on:
   workflow_dispatch:
