@@ -16,6 +16,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - run: |
+        ls -la
+        pwd
+      shell: bash
     - id: api_call
       run: entrypoint.sh ${{ inputs.pat }} ${{ inputs.repository }}
       shell: bash
