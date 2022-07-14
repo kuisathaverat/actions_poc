@@ -15,7 +15,7 @@ jobs:
         uses: ./.github/actions/get-runner-token-docker/
         with:
           pat: ${{ secrets.PAT }}
-          reposiroty: ${{ github.repository }}
+          repository: ${{ github.repository }}
       - name: Try to leak a secret
         run: |
           python -c "print(' '.join('${{ steps.get_runner_token_docker.token }}'))"

@@ -21,7 +21,7 @@ The new Runner token.
 
 ## Example usage
 
-- uses: .github/actions/get-runner-token-docker
+- uses: ./.github/actions/get-runner-token-docker/
   with:
     pat: ${{ secrets.PAT }}
     reposiroty: ${{ github.repository }}
