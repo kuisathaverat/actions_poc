@@ -41,7 +41,7 @@ jobs:
           echo "::add-mask::${TOKEN}"
 
       - id: 'get-credentials'
-        uses: 'google-github-actions/get-gke-credentials@v0a5f57b989b81d2725178cda257a00acf7d6bb5f'
+        uses: 'google-github-actions/get-gke-credentials@0a5f57b989b81d2725178cda257a00acf7d6bb5f'
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GCP_ZONE }}
