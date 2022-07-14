@@ -14,8 +14,8 @@ jobs:
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.github_token }}
-        volumes:
-          - ./.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
+        # volumes:
+        #   - ./.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
