@@ -1,0 +1,20 @@
+name: 'Get Runner Token'
+description: 'Request a new Runner token to associate a new Runner to GitHub Actions.'
+inputs:
+  pat:  # id of input
+    description: 'Personal Access Token to make the request, it requires repo:admin or org:admin permissions.'
+    required: true
+    default: ''
+  repository:  # id of input
+    description: 'Owner/repository where we going to request the Runner token.'
+    required: true
+    default: ''
+outputs:
+  token: # id of output
+    description: 'The new Runner token'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.pat }}
+    - ${{ inputs.repository }}
