@@ -1,5 +1,5 @@
 #!/bin/sh
-set -euo pipefail
+set -eu
 
 PAT=${1:?-"Missing Personal Access Token"}
 REPO=${2:?-"Missing Repository"}
