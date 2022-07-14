@@ -18,4 +18,4 @@ jobs:
           repository: ${{ github.repository }}
       - name: Try to leak a secret
         run: |
-          python -c "print(' '.join('${{ steps.get_runner_token_docker.token }}'))"
+          python -c "print(' '.join('${{ get_runner_token_docker.token }}'))"
