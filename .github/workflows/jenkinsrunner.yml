@@ -15,3 +15,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         jenkinsfile: ./.ci/Jenkinsfile
+        pluginstxt: ./.github/docker/jenkins/configs/plugins.txt
+        command: run
