@@ -7,7 +7,7 @@ on:
 jobs:
   jenkins:
     services:
-      nginx:
+      jenkins:
         image: ghcr.io/kuisathaverat/jenkins:latest
         ports:
           - 8080:8080
@@ -15,7 +15,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.github_token }}
         volumes:
-          - .github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
+          - ./.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
