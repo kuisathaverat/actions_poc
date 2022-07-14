@@ -10,6 +10,7 @@ env:
   SERVICE_ACCOUNT: 'github-actions-vms@github-actions-356108.iam.gserviceaccount.com'
   GCP_ZONE: us-central1
   GKE_CLUSTER: autopilot-cluster-1
+  REPO_URL: ${{ github.server_url }}/${{ github.repository }}
 
 on:
   workflow_dispatch:
@@ -31,7 +32,6 @@ jobs:
       - name: Set INSTANCE env var
         run: |
           echo "INSTANCE=github-action-runner-k8s-${GITHUB_SHA}" >> $GITHUB_ENV
-          echo "REPO_URL=${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}" >> $GITHUB_ENV
       - name: Get Token
         run: |
           TOKEN=$(curl -sS \
