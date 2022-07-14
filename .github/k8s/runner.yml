@@ -23,17 +23,15 @@ spec:
           value: {{ .REPO_URL }}
         - name: INSTANCE
           value: {{ .INSTANCE }}
-        image: ghcr.io/kuisathaverat/actions_poc/runner:latest
+        image: ghcr.io/kuisathaverat/runner:latest
         imagePullPolicy: Always
         name: runner
         resources:
           limits:
             cpu: 500m
-            ephemeral-storage: 1Gi
             memory: 2Gi
           requests:
-            cpu: 500m
-            ephemeral-storage: 1Gi
+            cpu: 100m
             memory: 2Gi
         lifecycle:
           preStop:
