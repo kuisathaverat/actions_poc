@@ -1,0 +1,15 @@
+# This workflow to run Jenkins in a GitHub Action.
+name: Jenkinsrunner GitHub Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  jenkinsfile-runner-prepackaged:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: jenkinsfile-runner-prepackaged
+      uses: jenkinsci/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
