@@ -9,11 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - run: touch ./plugins.txt
     - name: jenkinsfile-runner-prepackaged
       uses: jenkinsci/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         jenkinsfile: ./.ci/Jenkinsfile
-        pluginstxt: ./.github/docker/jenkins/configs/plugins.txt
+        pluginstxt: ./plugins.txt
         command: run
