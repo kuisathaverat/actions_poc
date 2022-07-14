@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: get_runner_token_docker
-        uses: ghcr.io/${{ github.actor }}/get-runner-token-docker
+        uses: ghcr.io/${{ github.actor }}/get-runner-token-docker:latest
         with:
           pat: ${{ secrets.PAT }}
           reposiroty: ${{ github.repository }}
