@@ -19,7 +19,7 @@ jobs:
       agent:
         image: jenkins/inbound-agent
         env:
-          JENKINS_AGENT_NAME: -jnlpUrl http://jenkins:18080/computer/local/slave-agent.jnlp
+          JENKINS_AGENT_NAME: -jnlpUrl http://jenkins:8080/computer/local/slave-agent.jnlp
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
