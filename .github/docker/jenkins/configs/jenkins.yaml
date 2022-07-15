@@ -8,7 +8,21 @@ jenkins:
   remotingSecurity:
     enabled: false
   scmCheckoutRetryCount: 2
-
+  nodes:
+  - permanent:
+      labelString: "linux immutable docker x86_64"
+      launcher:
+        jnlp:
+          workDirSettings:
+            disabled: true
+            failIfWorkDirIsMissing: false
+            internalDir: "remoting"
+            workDirPath: "/tmp"
+      name: "local"
+      numExecutors: 2
+      remoteFS: "/tmp"
+      retentionStrategy: "always"
+      
 unclassified:
   location:
     adminAddress: robots@elastic.co

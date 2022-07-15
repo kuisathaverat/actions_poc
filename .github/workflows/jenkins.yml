@@ -16,6 +16,10 @@ jobs:
           password: ${{ secrets.github_token }}
         # volumes:
         #   - full path/.github/docker/jenkins/Jenkinsfile.dsl:/Jenkinsfile.dsl
+      agent:
+        image: jenkins/inbound-agent
+        env:
+          JENKINS_AGENT_NAME: -jnlpUrl http://jenkins:18080/computer/local/slave-agent.jnlp
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

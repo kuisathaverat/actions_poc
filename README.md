@@ -235,6 +235,16 @@ To make the deploy `kubeclt` is the tools used to provision and deprovision the 
 * [gce-github-runner](https://github.com/related-sciences/gce-github-runner) Ephemeral GCE GitHub self-hosted runner.
 * [orka-actions-up](https://github.com/marketplace/actions/orka-actions-up) Run self-hosted, macOS workflows on MacStadium's Orka.
 
+# Jenkins as a service 
+
+It is possiblt tu run a Docker container as a service and use it,
+so I have tried to start a Jenkins container configurated with JCasC,
+and lauch a job created with jobDSL. 
+The result is nice, you can launch Jenkins configure the job with jobDSL,
+then launch the job and retrieve the logs.
+
+* [Jenkins as a Service](.github/workflows/jenkins.yml)
+
 # Features 
 
 * Simple
