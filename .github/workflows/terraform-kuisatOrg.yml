@@ -1,0 +1,41 @@
+# This workflow to update the KuisatOrg GitHub Organization.
+name: Terraform KuisatOrg
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io
+      DOCKER_IMAGE: ${{ github.actor }}/runner
+      VAULT_ADDR: https://104.155.175.88.ip.es.io:8200
+      GITHUB_TOKEN: ${{ secrets.PAT }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Retrieve secret from Vault
+        uses: hashicorp/vault-action@v2.4.1
+        with:
+          url: ${{ env.VAULT_ADDR }}
+          role: githubactions
+          method: jwt
+          jwtGithubAudience: https://github.com/kuisathaverat
+          exportToken: true
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform fmt
+        id: fmt
+        run: terraform -chdir=.github/terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform -chdir=.github/terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform -chdir=.github/terraform alidate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform -chdir=.github/terraform plan -no-color
