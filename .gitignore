@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.github/terraform/.terraform/providers/registry.terraform.io/integrations/github/4.27.0/darwin_amd64
+.github/terraform/.terraform.lock.hcl
+.vscode/settings.json
+github-actions-*.json
+real.yml
+ssh-vault.sh
+vault-keys.txt
