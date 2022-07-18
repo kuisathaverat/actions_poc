@@ -38,7 +38,7 @@ jobs:
 
       - name: Terraform Validate
         id: validate
-        run: terraform -chdir=.github/terraform alidate -no-color
+        run: terraform -chdir=.github/terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
