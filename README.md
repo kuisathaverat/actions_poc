@@ -1,7 +1,7 @@
 # GitHub action PoC
 Repository to test the capabilities of GitHub action and how to manage them at scale.
 
-# Executing GitHub actions
+# Executing GitHub actions
 
 GitHub Actions are manually, scheduled, or even drive triggered. 
 Any event defined at [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
@@ -22,19 +22,19 @@ can trigger a workflow.
 * [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
 * [Expresions](https://docs.github.com/en/actions/learn-github-actions/expressions)
 
-## Containers
+## Containers
 
 On linux runners is possible to run Docker containers and run steps inside them.
 
 * [Containers](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer)
 
-## Services
+## Services
 
 On linux runners is possible to run Docker containers and use then as services.
 
 * [Services](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idservices)
 
-## Use other actions
+## Use other actions
 
 Worlflows can use GitHub Actions as steps, these GitHub Actions come form the same repo, other repo, or a Docker image from any Docker registry.
 
@@ -42,7 +42,7 @@ Worlflows can use GitHub Actions as steps, these GitHub Actions come form the sa
 
 # Secrets
 
-## default GITHUB_TOKEN
+## default GITHUB_TOKEN
 
 An ephemeral GITHUB_TOKEN is is passed to the workflows if none is defined,
 it makes easy to access to GitHub repository, 
@@ -76,7 +76,7 @@ to leak the password.
         * google.subject: 'repo:kuisathaverat/actions_poc:ref:refs/heads/main'
 * Add the service account to the Workload Identity Pools (IAM & admin/Workload Identity Pools/GitHub Action identity pool pool details)
 
-### Vault
+### Vault
 
 In order to make some test, I have configured a HashiCorp Vault service on a VM in CGP.
 First of all we have to launch a VM and install HashiCorp Vault,
@@ -210,7 +210,7 @@ with it has tons of libraries, and support for unit tests.
 * [Creating a composite action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
 * [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
 
-# Self-hosted runners
+# Self-hosted runners
 
 It is possible to use self-hosted runners, these runners are any kind of VM/machine/pod/... 
 that can run the [runner app](https://github.com/actions/runner).
