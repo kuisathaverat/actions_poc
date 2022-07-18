@@ -1,0 +1,21 @@
+name: Clean Workflow Logs
+
+permissions:
+  actions: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      days_old:
+        description: "The amount of days old to delete"
+        default: "7"
+        required: false
+
+jobs:
+  clean-logs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: igorjs/gh-actions-clean-workflow@1eb821ca8b28f233b57edac4bfa4da61899557fa
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          days_old: ${{ github.event.inputs.days_old }}
