@@ -245,6 +245,17 @@ then launch the job and retrieve the logs.
 
 * [Jenkins as a Service](.github/workflows/jenkins.yml)
 
+
+# Terraform GitHub Organizations
+
+The [GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest/docs) allows to use
+Terraform to manage a GitHub organization and all its resources.
+GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest/docs) can create and configure
+repositories, teams, Webhooks, Projects, issues, secrets, GPG Keys, SSH Keys,... everything defined
+in Terraform files with all the advantages it has like repeability and manteniability.
+
+* [GitHub Terraform configuration example](.github/terraform)
+
 # Features 
 
 * Simple
