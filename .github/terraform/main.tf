@@ -122,14 +122,14 @@ resource "github_team_repository" "omac_team_repo" {
 }
 
 # add owner file to the repository
-resource "github_repository_file" "tf_repo00_owner_file" {
-  repository = github_repository.tf_repo00.name
-  branch = github_branch_default.tf_repo00_default.branch
-  file       = ".github/CODEOWNERS"
-  content    = "* @omac-team\n.ci/* @kuisathaverat"
-  commit_message = "Add CODEOWNERS file"
-  overwrite_on_create = true
-}
+# resource "github_repository_file" "tf_repo00_owner_file" {
+#   repository = github_repository.tf_repo00.name
+#   branch = github_branch_default.tf_repo00_default.branch
+#   file       = ".github/CODEOWNERS"
+#   content    = "* @omac-team\n.ci/* @kuisathaverat"
+#   commit_message = "Add CODEOWNERS file"
+#   overwrite_on_create = true
+# }
 
 # add webhook to the repository
 resource "github_repository_webhook" "tf_repo00_webhook" {
