@@ -42,4 +42,4 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform -chdir=.github/terraform plan -no-color
+        run: terraform -chdir=.github/terraform apply -no-color -auto-approve

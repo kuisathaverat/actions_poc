@@ -136,3 +136,4 @@ ssh-vault.sh
 vault-keys.txt
 .github/terraform/.terraform/providers/registry.terraform.io/hashicorp/vault/3.7.0/darwin_amd64
 .github/terraform/terraform.tfstate
+.github/terraform/terraform.tfstate.backup
