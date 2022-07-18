@@ -157,7 +157,9 @@ resource "github_repository_webhook" "tf_repo00_webhook" {
 
 # add Vault provider
 provider "vault" {
-  address = "https://104.155.175.88.ip.es.io:8200"
+    # token = var.token # or `VAULT_TOKEN`
+    # address = "https://104.155.175.88.ip.es.io:8200" # or `VAULT_ADDR`
+    skip_child_token = true
 }
 
 # read a secret from Vault
