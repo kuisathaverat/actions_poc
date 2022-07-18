@@ -321,4 +321,5 @@ Actions on your Kubernetes cluster.
 * [actions/packer-github-actions](https://github.com/marketplace/actions/packer-github-actions) GitHub Action for running Packer commands.
 * [actions/slack-send](https://github.com/marketplace/actions/slack-send) Send data into Slack using this GitHub Action! 
 * [actions/jenkinsfile-runner-prepackaged](https://github.com/marketplace/actions/jenkinsfile-runner-prepackaged) This is a POC how to run Jenkinsfiles inside GitHub Actions.
-
+* [set-up-wireguard](https://github.com/marketplace/actions/set-up-wireguard) This GitHub action sets up a WireGuard connection in your workflow run.
+* [connect-vpn](https://github.com/marketplace/actions/connect-vpn) This action is a connect ovpn script
