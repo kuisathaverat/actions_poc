@@ -56,12 +56,6 @@ resource "github_repository" "tf_repo00" {
 }
 
 # create a new repository branch
-resource "github_branch" "tf_repo00_main" {
-  repository = github_repository.tf_repo00.name
-  branch     = "main"
-}
-
-# create a new repository branch
 resource "github_branch" "tf_repo00_development" {
   repository = github_repository.tf_repo00.name
   branch     = "development"
@@ -70,7 +64,7 @@ resource "github_branch" "tf_repo00_development" {
 # set default repository branch
 resource "github_branch_default" "tf_repo00_default"{
   repository = github_repository.tf_repo00.name
-  branch     = github_branch.tf_repo00_main.branch
+  branch     = "main"
 }
 
 # creaate a new repository
@@ -83,11 +77,6 @@ resource "github_repository" "tf_repo01" {
     }
 }
 
-# create a new repository branch
-resource "github_branch" "tf_repo01_main" {
-  repository = github_repository.tf_repo01.name
-  branch     = "main"
-}
 
 # create a new repository branch
 resource "github_branch" "tf_repo01_development" {
@@ -98,7 +87,7 @@ resource "github_branch" "tf_repo01_development" {
 # set default repository branch
 resource "github_branch_default" "tf_repo01_default"{
   repository = github_repository.tf_repo01.name
-  branch     = github_branch.tf_repo01_main.branch
+  branch     = "main"
 }
 
 ## Teams management
