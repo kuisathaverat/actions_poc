@@ -1,0 +1,16 @@
+---
+# Workflow to test check_run event
+name: On check_run dummy
+on:
+  check_run:
+    types: [completed]
+
+permissions:
+    contents: read
+
+jobs:
+  on-push-dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy step
+        run: echo "This is a dummy step"

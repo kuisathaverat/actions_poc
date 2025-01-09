@@ -1,0 +1,15 @@
+---
+# Workflow to test push event
+name: On push dummy
+on:
+  push: {}
+
+permissions:
+    contents: read
+
+jobs:
+  on-push-dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy step
+        run: echo "This is a dummy step"
