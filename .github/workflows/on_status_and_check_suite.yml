@@ -1,0 +1,18 @@
+---
+    # Workflow to test status and check_suite event
+    name: On status and check_suite dummy
+    on:
+        check_suite:
+            types:
+                - completed
+        status: {}
+    
+    permissions:
+        contents: read
+    
+    jobs:
+      on-push-dummy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Dummy step
+            run: echo "This is a dummy step"
