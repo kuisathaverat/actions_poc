@@ -1,0 +1,19 @@
+# This workflow test random numbers generation on retries.
+name: Test random numbers
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run_action:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3 
+      - run: echo "${RANDOM}"
+      - run: |
+          touch foo.txt
+          git add .
+          git commit -m "test: sha"
+          git rev-parse HEAD
