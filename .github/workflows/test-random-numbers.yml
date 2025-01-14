@@ -19,3 +19,5 @@ jobs:
           git add .
           git commit -m "test: sha"
           git rev-parse HEAD
+          # casue error
+          exit 1
